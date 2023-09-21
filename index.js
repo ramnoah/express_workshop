@@ -1,35 +1,25 @@
-console.log("Hi, world")
 
 const express=require('express');
 const app = express();
+const pokemon = require('./routes/pokemon')
+const morgan = require ('morgan');
 
-/* 
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+//SE USA P
 
-VERBS IN HTTP
-GET - POST - PATCH - PUT - DELETE 
-
-*/
 
 app.get("/", (req, res, next) => {
-    res.status(200);
-    res.send("Bienvenido, este es tu hola mundo en Express.js");
+    return res.status(200).send("Welcome to Pokedex");
+}); 
+//REINICIAR SERVIDOR DE FORMA AUTOMATICA
+app.use("/pokemon",pokemon);
 
-
+app.use((req, res, next) =>{
+    return res.status(404).json({code: 404, message: "URL NO ENCONTRADA :("});
 });
 
-app.listen(3000, () =>{
+app.listen(process.env.PORT || 3000,() =>{
     console.log("Server is running");
 });
-
-
-
-
-
-
-
-
-
-
-let yei=0;
-var zzz= 0;
-//variable
